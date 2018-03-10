@@ -174,12 +174,33 @@ def find_name_duplicates(filename):
     set(['Weasley'])
 
     """
+    fall_15 = []
+    winter_16 = []
+    spring_16 = []
+    summer_16 = []
 
-    # student_list = sort_by_cohort(filename)[:]    
-    # student_list = [set(all_students) for cohort in student_list]
-    # duplicate_names = student_list[0]
-    # for i in range(1, len(student_list)):
-    #     duplicate_names = duplicate_names & student_list[i]
+    cohort_file = open(filename)
+    for line in cohort_file:
+        line = line.strip()
+        student_lastname = line.split('|')[1]
+        student_cohort = line.split('|')[4]
+        if student_cohort == "Fall 2015":
+            fall_15.append(student_lastname)
+        elif student_cohort == "Winter 2016":
+            winter_16.append(student_lastname)
+        elif student_cohort == "Spring 2016":
+            spring_16.append(student_lastname)
+        elif student_cohort == "Summer 2016":
+            summer_16.append(student_lastname)
+
+    student_list = [
+        set(fall_15),
+        set(winter_16),
+        set(spring_16),
+        set(summer_16)
+    ]
+
+    duplicate_names = reduce(lambda x, y: x & y, student_list)
 
     return duplicate_names
 
